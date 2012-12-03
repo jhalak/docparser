@@ -11,6 +11,7 @@
 
 class DocParser {
   private $url = 'http://198.101.153.9/docparser/doc_parser.php';
+  //private $url = 'http://localhost/docparser/doc_parser.php';
   
   public function getHtmlFromDocFile($fileName) {
     $file = file_get_contents($fileName);
@@ -18,6 +19,7 @@ class DocParser {
       array(
       	'file_content' => $file,
       	'filename' => basename($fileName),
+      	'api_key' => 'e4a2ed88c280c425a1e8add7c0ac5f171be9c4b2ecfe5a881d71e64d14361ac8',
       )
     );
     return $this->doPostRequest($data);
