@@ -41,18 +41,20 @@ file_put_contents($doc_filepath, $_POST['file_content']);
 
 
 try{
-  $output = system('/usr/bin/unoconv -f html ' . $doc_filepath, $r);
-  if (!$r) {
+  // execute shell command to convert the file
+  shell_exec('/usr/bin/unoconv -f html ' . $doc_filepath);
+
+  // if html is created then get the content
+  if (stat($html_filepath)) {
     $html = file_get_contents($html_filepath);
     
     // say bye bye to html file
-    if (stat($html_filepath)) {
-      unlink($html_filepath);
-    }
+    unlink($html_filepath);
+    
     // We got it!! send it, hurry!!
     echo $html;
   } else{
-    throw new Exception('Can\'t execute command');
+    throw new Exception('Problem in converting doc to HTML');
   }
 }catch (Exception $e) {
   echo $e->getMessage();
